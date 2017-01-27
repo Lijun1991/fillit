@@ -35,7 +35,7 @@ static int		check_char(char *s)
 			return (0);
 		i++;
 	}
-	if (hash % 4 == 0 || point % 12 == 0 || newline % 4 == 0)
+	if (hash % 4 == 0 && (point % 12 == 0 || newline % 4 == 0))
 		return (1);
 	return (0);
 }
@@ -92,17 +92,22 @@ int				check_file(char *s)
 {
 	int		fd;
 	int		ret;
+	int		nb_read;
 	char	buf[BUF_SIZE + 1];
 
 	g_count = 0;
+	nb_read = 0;
 	fd = open(s, O_RDWR);
 	while ((ret = read(fd, buf, BUF_SIZE)))
 	{
 		buf[ret] = '\0';
 		if (!(check_char(buf) && check_line(buf) && check_connect(buf)))
 			return (0);
+		nb_read += ret;
 		if (g_count++ >= 26)
 			return (0);
 	}
+	if ((nb_read - 20) % 21)
+		return (0);
 	return (1);
 }
