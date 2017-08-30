@@ -184,7 +184,7 @@ The program continues until a map is found that will contain all of the tetromin
 
 ## Authors
 
-* **Lijun Wang** (https://github.com/robertnowell)
+* **Lijun Wang** (https://github.com/Lijun1991)
 * **Ngan Kim Nguyen**
 ## Acknowledgments
 
