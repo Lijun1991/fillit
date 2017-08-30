@@ -12,9 +12,14 @@
 
 #include "fillit.h"
 
+/*
+** validate file, store tetri '#' data to two-dimensional array
+** start recursively sovling, find solution, print out, free memory
+*/
+
 int	main(int argc, char **argv)
 {
-	int n;
+	int tetri_total;
 	int **yxarray;
 	int fd;
 
@@ -25,10 +30,10 @@ int	main(int argc, char **argv)
 			ft_putstr("error\n");
 			return (0);
 		}
-		n = count_tetri(argv[1]);
+		tetri_total = count_tetri(argv[1]);
 		fd = open(argv[1], O_RDWR);
-		yxarray = all_hashyx_array(n, 0, fd);
-		smallest_square_map(0, n, yxarray, 0);
+		yxarray = all_hashyx_array(tetri_total, 0, fd);
+		smallest_square_map(0, tetri_total, yxarray, 0);
 		free(yxarray);
 	}
 	else

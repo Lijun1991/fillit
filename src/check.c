@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "../fillit.h"
 
 static int		check_char(char *s)
 {
@@ -87,6 +87,11 @@ static int		check_connect(char *s)
 		return (1);
 	return (0);
 }
+
+/*
+** open parameter file, Checking to ensure that the file contains valid information 
+** (according to specifications in the fillit.en.pdf)  
+*/
 
 int				check_file(char *s)
 {

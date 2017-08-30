@@ -12,7 +12,7 @@
 
 NAME = fillit
 
-SRC = position.c solve.c check.c main.c read.c
+SRC = src/position.c src/solve.c src/check.c main.c src/read.c
 
 OBJ = $(SRC : .c = .o)
 

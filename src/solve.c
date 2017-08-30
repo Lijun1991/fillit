@@ -10,16 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "../fillit.h"
 
-int		min_len(int n)
+/*
+** get the minimum reasonable side length of the final target square
+*/
+
+int		min_len(int tetri_total)
 {
-	int i;
+	int min_side_length;
 
-	i = 0;
-	while ((i * i) < (n * 4))
-		i++;
-	return (i);
+	min_side_length = 0;
+	while ((min_side_length * min_side_length) < (tetri_total * 4))
+		min_side_length++;
+	return (min_side_length);
 }
 
 int		map_size(char **map)
@@ -51,6 +55,10 @@ void	print_map(char **map, int len)
 	}
 }
 
+/*
+** core backtracking algorithm
+*/
+
 int		solve(char **map, int i, int **hashyx, int n)
 {
 	int		len;
@@ -72,13 +80,17 @@ int		solve(char **map, int i, int **hashyx, int n)
 	return (0);
 }
 
-void	smallest_square_map(int length, int n, int **hashyx, int y)
+/*
+** start with the samllest reasonable square and keep enlarging until big enough
+*/
+
+void	smallest_square_map(int length, int tetri_total, int **hashyx, int y)
 {
 	char	**map;
 	int		x;
 
 	if (length == 0)
-		length = min_len(n);
+		length = min_len(tetri_total);
 	map = (char **)malloc(sizeof(char *) * (length + 1));
 	while (y < length)
 	{
@@ -91,10 +103,10 @@ void	smallest_square_map(int length, int n, int **hashyx, int y)
 		y++;
 	}
 	map[y] = 0;
-	if (!solve(map, 0, hashyx, n))
+	if (!solve(map, 0, hashyx, tetri_total))
 	{
 		free(map);
-		smallest_square_map(++length, n, hashyx, 0);
+		smallest_square_map(++length, tetri_total, hashyx, 0);
 	}
 	else
 		print_map(map, length);

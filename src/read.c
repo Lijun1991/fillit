@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "../fillit.h"
+
+/*
+** scan each byte of tetri, store each '#' coordinate x y to an int array
+*/
 
 int		*hash_xy_array(char *s, int len, int i, int t)
 {
@@ -40,7 +44,11 @@ int		*hash_xy_array(char *s, int len, int i, int t)
 	return (dst);
 }
 
-int		**all_hashyx_array(int n, int y, int fd)
+/*
+** store every tetri coordinate to two-dimensional int array
+*/
+
+int		**all_hashyx_array(int tetri_total, int y, int fd)
 {
 	int		ret;
 	int		**hashyx;
@@ -51,8 +59,8 @@ int		**all_hashyx_array(int n, int y, int fd)
 		ft_putstr("open() error");
 		return (NULL);
 	}
-	hashyx = (int**)malloc(sizeof(int*) * (n + 1));
-	while ((ret = read(fd, buf, 21)))
+	hashyx = (int**)malloc(sizeof(int*) * (tetri_total + 1));
+	while ((ret = read(fd, buf, BUF_SIZE)))
 	{
 		hashyx[y++] = hash_xy_array(buf, ret, 0, -1);
 	}
@@ -63,6 +71,10 @@ int		**all_hashyx_array(int n, int y, int fd)
 	}
 	return (hashyx);
 }
+
+/*
+** open parameter file, read 21 bytes of data into buf, to count tetri total
+*/
 
 int		count_tetri(char *file)
 {
@@ -75,6 +87,11 @@ int		count_tetri(char *file)
 	fd = open(file, O_RDWR);
 	while ((ret = read(fd, buf, BUF_SIZE)))
 		count++;
+	if (close(fd) == -1)
+	{
+		ft_putstr("close() error");
+		return (NULL);
+	}
 	return (count);
 }
 
